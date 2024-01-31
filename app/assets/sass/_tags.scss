@@ -1,0 +1,34 @@
+// @import "govuk-frontend/govuk/components/tag/tag";
+
+// .govuk-tag {
+//   padding-bottom: 4px;
+//   background-color: govuk-colour("secondary");
+//   line-height: 1em;
+// }
+
+// .govuk-tag__failure {
+//   background-color: govuk-colour("failure");
+// }
+
+.govuk-tag__warning {
+  background-color: #de8f1a;
+  color: #000;
+}
+
+// .govuk-tag__success {
+//   background-color: govuk-colour("success");
+// }
+
+.govuk-tag__notice {
+  background-color: govuk-colour("dark-grey");
+}
+
+.govuk-tag__active {
+  color: #10403c;
+  background: #bfe3e0;
+}
+
+.govuk-tag__inactive {
+  color: #383f43;
+  background: #eeefef;
+}

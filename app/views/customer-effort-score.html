@@ -1,0 +1,23 @@
+{% extends "layouts/main.html" %}
+
+{% block header %}
+{% include "layouts/shared/header.html" %}
+{% endblock %}
+
+{% set pageName="Feedback submitted" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-m govuk-!-margin-top-7">
+            Thank you for your feedback.
+        </h1>
+        <p>
+            <a href="/tasks">View your tasks</a>
+            to make another report.
+        </p>
+    </div>
+</div>
+
+{% endblock %}

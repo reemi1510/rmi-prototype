@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% block header %}
+{% include "layouts/shared/header.html" %}
+{% endblock %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      Tasks
+    </h1>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    {% set unstartedTaskCount = 0 %}
+    {% for task in data %}
+    {% if task.status === 'unstarted' %}
+    {% set unstartedTaskCount = unstartedTaskCount + 1 %}
+    {% endif %}
+    {% endfor %}
+    {% if unstartedTaskCount > 1 %}
+    <nav aria-labelledby="page-actions-title" class="govuk-page-actions">
+      <h2 aria-label="Page actions" class="govuk-heading-s" id="page-actions-title">Action</h2>
+      <ul class="govuk-page-actions--actions">
+        <li class="govuk-page-actions--action">
+          <a aria-label="Report no business for 2 or more tasks" href='/report-no-business'>Report no business for 2 or
+            more tasks</a>
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        {% for task in data %}
+        {% if task.status !== 'completed' %}
+        <tr class="govuk-table__row" id="task-{{ task.id }}">
+          <td class="govuk-table__cell">
+            <h2 class="govuk-heading-m">{{ task.title }} for {{ task.month }}</h2>
+            {% if userType === 'user_one' %}
+            <h3 class="govuk-heading-s">
+              <span class="govuk-visually-hidden">
+                Supplier:
+              </span>
+              {{task.supplier.name}}
+            </h3>
+            {% endif %}
+            <p>
+              <strong class="govuk-tag govuk-tag__warning">Overdue</strong>
+              {% if task.status === 'correcting' %}
+              <strong class="govuk-tag govuk-tag__notice">Correction</strong>
+              {% endif %}
+            </p>
+            {% if task.status === 'correcting' %}
+            <p class="ccs-task-status-message">This submission has been validated. Please review and submit to CCS.</p>
+            <p><a aria-label="Cancel correction on {{ task.title }} for {{ task.month }}" href=#>Cancel correction</a>
+            </p>
+            <div>
+              <a class="govuk-button"
+                aria-label="Review and submit the management information on {{ task.title }} for {{ task.month }}"
+                href=#>Review and submit</a>
+            </div>
+            {% else %}
+            <p><a aria-label="Download excel document template for RM807 Vehicle Hire" href=#>Download template (excel
+                document)</a></p>
+            <div>
+              <a class="govuk-button govuk-!-margin-right-2"
+                aria-label="Report management information for Example Supplier on RM807" href=#>Report management
+                information</a>
+              <a class="govuk-button govuk-button--secondary"
+                aria-label="Report no business for Example Supplier on RM807" href=#>Report no business</a>
+            </div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

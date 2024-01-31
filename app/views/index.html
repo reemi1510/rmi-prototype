@@ -1,6 +1,6 @@
-<!-- {% extends "layouts/main.html" %} -->
+{% extends "layouts/main.html" %}
 {% block header %}
-  {% include "layouts/shared/header.html" %}
+{% include "layouts/shared/header.html" %}
 {% endblock %}
 
 {% set pageName="Home" %}
@@ -14,6 +14,35 @@
       Welcome to {{ serviceName }}
     </h1>
 
+    <form action="/user" method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              Please choose a user type
+            </h1>
+          </legend>
+          <p id="chooseUserType-error" class="govuk-error-message" style="display: none;">
+            <span class="govuk-visually-hidden">Error:</span> Select a user type
+          </p>
+          <div class="govuk-radios" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="multi-supplier" name="user-type" type="radio" value="user_one">
+              <label class="govuk-label govuk-radios__label" for="multi-supplier">
+                User with multiple suppliers and agreements
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="single-supplier" name="user-type" type="radio" value="user_two">
+              <label class="govuk-label govuk-radios__label" for="single-supplier">
+                User with single supplier and agreement
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button type="submit" id="select-user-type-btn" class="govuk-button govuk-!-margin-top-2" aria-label="Select user type">Submit</button>
+    </form>
   </div>
 </div>
 

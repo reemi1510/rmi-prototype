@@ -1,0 +1,66 @@
+{% extends "layouts/main.html" %}
+
+{% block header %}
+{% include "layouts/shared/header.html" %}
+{% endblock %}
+
+{% set pageName="Report no business" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <a class="govuk-back-link" title="Back to your tasks" href="/tasks">Back</a>
+        <h1 class="govuk-heading-xl">
+            Report no business for 2 or more tasks
+        </h1>
+    </div>
+</div>
+
+<div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="select-tasks-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-heading-m">
+                What tasks do you want to report no business for?
+            </h2>
+        </legend>
+        <div id="select-tasks-hint" class="govuk-hint">
+            Select at least one option.
+        </div>
+
+        <span id="selectedItems-error" class="govuk-error-message" style="display: none;">
+            <span class="govuk-visually-hidden">Error:</span> Please select at least one item
+        </span>
+
+        <form id="select-no-biz-tasks" action="/update-selected-tasks" method="post">
+            <p><a id="select-all" aria-label="Select all tasks" href=#>Select all tasks</a></p>
+
+            {% set suppliers = data | groupBySupplier %}
+            {% for supplierId, supplierTasks in suppliers %}
+            {% if userType === 'user_one' %}
+            <h3 class="govuk-heading-s govuk-!-margin-top-4">
+                <span class="govuk-visually-hidden">
+                    Supplier:
+                </span>
+                {{supplierTasks[0].supplier.name}}
+            </h3>
+            {% endif %}
+                {% for task in supplierTasks %}
+                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item govuk-!-margin-bottom-1">
+                        <input class="govuk-checkboxes__input" id="{{ task.id }}" name="selectedTasks" type="checkbox"
+                            value="{{ task.id }}">
+                        <label class="govuk-label govuk-checkboxes__label" for="{{ task.id }}">
+                            {{ task.title }} for {{ task.month }}
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+    </fieldset>
+    <button type="submit" class="govuk-button govuk-!-margin-top-2" id="submit-selected-no-biz-tasks-btn"
+        aria-label="Report no business">Report no business</button>
+    </form>
+</div>
+
+{% endblock %}

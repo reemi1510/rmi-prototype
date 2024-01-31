@@ -1,0 +1,136 @@
+{% extends "layouts/main.html" %}
+
+{% block header %}
+{% include "layouts/shared/header.html" %}
+{% endblock %}
+
+{% set pageName="Tasks complete" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">
+                Tasks complete
+            </h1>
+
+            <div class="govuk-panel__body">
+                Thank you for reporting no business
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Tasks
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    <ul class="govuk-list">
+                        {% set suppliers = data | groupBySelectedSupplier %}
+                        {% for supplierId, supplierTasks in suppliers %}
+                        {% if userType === 'user_one' %}
+                        <li><b>{{supplierTasks[0].supplier.name}}</b></li>
+                        {% endif %}
+                        {% for task in supplierTasks %}
+                        <li>{{ task.title }} for {{ task.month }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </dd>
+            </div> 
+        </dl>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+            What happens next
+        </h2>
+        <p>
+            We will contact you if we need more information about what you have told us.
+        </p>
+        <p>
+            If you’ve made a mistake or need to amend the management information
+            you’ve supplied, email <a href=#>report-mi@crowncommercial.gov.uk</a> for help.
+        </p>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group govuk-!-margin-top-7" id="feedback-form">
+            <form action="/customer-effort-score" accept-charset="UTF-8" method="post"><input type="hidden"
+                    name="authenticity_token" autocomplete="off">
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-heading-m">
+                            Overall how easy was it to use this service today? (Optional)
+                        </h2>
+                    </legend>
+                    <div class="govuk-radios" data-module="govuk-radios">
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="customer-satisfaction-1" name="customer_satisfaction"
+                                type="radio" value="Very easy">
+                            <label class="govuk-label govuk-radios__label" for="customer-satisfaction-1">
+                                Very easy
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="customer-satisfaction-2" name="customer_satisfaction"
+                                type="radio" value="Easy">
+                            <label class="govuk-label govuk-radios__label" for="customer-satisfaction-2">
+                                Easy
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="customer-satisfaction-3" name="customer_satisfaction"
+                                type="radio" value="Neither easy or difficult">
+                            <label class="govuk-label govuk-radios__label" for="customer-satisfaction-3">
+                                Neither easy or difficult
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="customer-satisfaction-4" name="customer_satisfaction"
+                                type="radio" value="Difficult">
+                            <label class="govuk-label govuk-radios__label" for="customer-satisfaction-4">
+                                Difficult
+                            </label>
+                        </div>
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="customer-satisfaction-5" name="customer_satisfaction"
+                                type="radio" value="Very difficult">
+                            <label class="govuk-label govuk-radios__label" for="customer-satisfaction-5">
+                                Very difficult
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="govuk-character-count" data-maxlength="2000" data-module="govuk-character-count">
+                    <h2 class="govuk-label-wrapper govuk-!-margin-top-7">
+                        <label class="govuk-label govuk-label--m" for="more-detail">
+                            How could we improve this service? (Optional)
+                        </label>
+                    </h2>
+                    <div class="govuk-hint" id="more-detail-hint">
+                        Do not include personal or financial information.
+                    </div>
+                    <textarea aria-describedby="more-detail-hint" class="govuk-textarea govuk-js-character-count"
+                        id="with-hint" name="more_detail" rows="5"></textarea>
+                    <div class="govuk-hint govuk-character-count__message govuk-character-count__status"
+                        id="with-hint-info">You have 2000 characters remaining</div>
+
+                </div>
+                <input type="submit" name="commit" value="Send feedback" data-prevent-double-click="true"
+                    data-disable-with="Send feedback" class="govuk-button">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
